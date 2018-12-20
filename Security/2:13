@@ -1,0 +1,92 @@
+2/13
+Security Lecture 4
+
+Obtain Password -> search home/office, guess pwd, key/logger, malware, cracking the pwd through brute force
+
+1. get password file for HW, we'll learn a technique today to access that
+
+Gathering and examining key application info
+	get tool to spyder all links for you
+	web spyder goes to page, identifies all links, goes to each link recursively until no new links are around
+	some menus are dynamically formed, so sometimes you have to direct the spyder
+To discover hidden content
+	web archives
+	you can tell by status what other methods to try (ie 500 = servers broken so maybe you can try some other parameter)
+
+INJECTION = #1 threat
+
+OS Command Injection
+	if you have access to someone elses web server and can access their OS command...
+	you can get PASSWORD file! remove all their files, look at their shit etc
+
+	; allows command to be executed sequentially
+
+Injecting via ASP
+	tries to let admin/user input file/directory name and does listing in that directory
+	&& means finish whatever construction and come back to config
+
+to prevent OS command injection, use built in API and stop using these commands
+blacklisting means you dont allow certain commands, however Could be bypassed through encoding and stuff
+whitelisting is more secure because you only allow certain inputs and thats it
+web application principle of least priviledge- do whatever you need to do and nothing more
+
+$user -> jane OR 1=1
+-- after to be seen as a comment, wont be passed
+deal w comment to craft a correct input
+
+if ' or ; generates errors, it means that your input counts and uses part of your input as part of their commands
+
+use limit1 to get only 1 row back
+
+7' or 1=1 -- into ID and you get all ids myvulnerablesite.com
+stuff can also be filtered so its even harder to inject inputs
+Identify number of columns so that you can union them with other columns (union can only be done w same number of columns)
+then you can maybe see if there is a User table w passwords and usernames
+
+access information schema, meta data about the column name headers, different table names
+
+How to prevent SQL Injection
+1. dont allow hacker to craft that kind of input
+  however, can bypass input validation, 
+2. bind string, user, parameter and only input as data, not as part of command
+3. Least priviledge
+4. encrypt sensitive data
+
+Cross-site scripting:goal is to be able to inject a script on a victims page
+	that way your page can run my stuff and the same origin policy is broken
+
+If you can get your script on Facebook...
+deface website (can do with javascript) 
+mine the bitcoin
+Have script send you the users cookies
+
+Stored cross-side scripting
+	you dont need user to click on anything
+	more intense than reflected CSS
+	compromises your database, whoever visits page will get compromised
+
+Reflected cross-side scripting
+	instead of having script stored in database, get victim to click on link (social engineering)
+	you need to get person to click on a link
+	page that has 'jane' uptop to bring you to 'Welcome Jane' can be injected by script
+	attacker can get script to run on victims browser
+
+disable browsers setting (firewall?), depends on network youre on too
+
+Request Forgery
+have server send back something you alter
+victim doesnt want to make request to server but does bc of request forgery
+
+Cross-site Request Forgery 
+	you click on one site, click on an attacker site and they send a request to the site you visited through their browser
+
+	you can check the origin of the page as a developer: refer header, http requests
+	tokens, if you dont have a valid token the server wont process your request - protection from CSRF
+
+USER CAN PREVENT by opening a new browser, its a separate session
+
+XXE = XML External Entities
+
+Core Security Problem = we can input arbitrary things into server-side application, users can control inputs
+	dont trust users input, clean it up, whitespace it, etc.
+

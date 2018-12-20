@@ -1,0 +1,540 @@
+Midterm Review
+/*******************************************
+- The only system models/diagrams (re: lecture 5 p.5-10) that will be covered is the DFD.
+
+- Verifying security requirements with a formal proof (outer argument) will not be included (as mentioned in the class).
+
+
+1 sided A4 typed or handwritten 1hr50min
+Week 1 until feb 27 plus HW 1 and HW 2
+written answers
+UNDERSTAND 8 principles from 1st class
+which principles apply to each scenario
+go through papers too
+for HW 1 understand how the passwords are stored
+
+What to know: Based on a DD diagram, can I identify STRIDE per element??
+Given a system, i should be able to identify/characterize DFD and STRIDE per part of DFD
+**XIN paper will help with this
+/*******************************************
+
+---------------------------------------------Lecture 1---------------------------------------------
+
+CIA Triad SECURITY 
+Confidentiality - assets of the computer system should be accessible only by authorized parties. (protects against inapropriate disclosure)
+	Secrecy, anonymity, privacy
+Integrity - assets can be modified only by authorized parties or in authorized ways. (protection against inappropriate modification)
+	non-repudiation, authenticity, accountability
+Availability - authorized parties should not be prevented from accessing objects to which they have legitimate access. (protection against denial-of-service)
+	reliability
+
+Security concepts
+Vulnerability: a weakness in the system; A vulnerability can be exploited to cause loss or harm; E.g. unpatched applications/OS, unrestricted wireless access point, an open port on a firewall
+Threat: A set of circumstances that has the potential to cause loss or harm; Any potential danger that is associated with the exploitation of a vulnerability; E.g. threat agent – intruder accessing the network, a process accessing confidential data, an employee copying confidential information.
+Risk: The likelihood of a threat source exploiting a vulnerability and the corresponding business impact 
+Control: An action, device, procedure, or technique that eliminates/reduces a  vulnerability and/or to counter threats. -> mitigate/reduce the potential risk; Also called a countermeasure / safeguard  
+
+Functionalities of Security Controls
+Preventative— to avoid an incident from occurring by blocking the attack or removing the vulnerability 
+Detective – identifies an incident’s activities (either as it happens or some time after the fact) 
+Corrective – fixes systems after an incident has occurred 
+Deterrent – to discourage a potential attacker by making the attack harder but not impossible 
+Recovery – to bring the environment back to regular operations 				
+
+Security Controls
+-Identification & Authentication 
+	•Identification – is the act of asserting who a person is.  
+	•Authentication – is the act of proving that asserted identity.
+		(1) something you know (2) something you have (3) something you are  
+	•Authentication, however, need not be a ‘one-off’ activity
+	•Two factor authentication/multi factor authentication 
+-Access Control
+	•Limits who can access what in what ways
+	•ensures that only authorized users can gain access to protected resources
+	•Example: the unix’s control list, role-based access control, password protection
+-Communication Security
+• Cryptography – conceals data against unauthorized access
+	o An encryption mechanism transforms plain into unreadable text (called
+cipher text).
+	o Decryption then transforms back to the original plain text
+• Security Protocols - a sequence of steps to allow communication
+	o Transport Layer Security (TLS) & Secure Sockets Layer (SSL) - an example of protocol for allowing users to send information to web sites.
+-Physical Controls
+• Detective measures – CCTV, alarm, personnel ID system, and metal or movement detectors.
+• Preventive measures – locks on doors, guards, fencing and strong constructions.
+-Administrative Controls – “soft controls”
+• screening and management of personnel, password management, information house keeping and media handling, security documentation, training
+
+***Basic Principles***
+Economy of Mechanism (Simplicity) –
+• The security mechanisms should be as simple as possible.
+• Implementation of unnecessary security mechanisms should be avoided.
+Fail-safe Defaults –
+• When a system fails, it should do so securely
+• default should be no access; explicit grant access.
+• e.g. if a firewall fails, no packets will be forwarded.
+Complete Mediation - 
+• All requests/access to objects should be checked to ensure that they are allowed.
+• e.g. computer memory enforces checks on every memory access requests.
+Open Design
+• the security of a system should not depend on the secrecy of its protection mechanisms, i.e. don’t rely on security through obscurity
+• e.g. cryptography should still be secure if everything, except for the keys, is not kept secret.
+Separation of Privilege –
+• no complete power – security should not reply only on a single mechanism 
+• two or more conditions must be met before access should be permitted.
+• e.g. the use of token ID in web requests instead of relying only on cookies.
+Least Privilege – “need-to-know” rule.
+• Any component and user of a system should operate using the least set of privileges to complete its job
+• e.g. do not allow web applications to use sa or other privileged db account.
+Least common mechanism –
+• avoid having multiple subjects sharing mechanisms to grant access to a resource
+• mechanisms used to access resources should not be shared.
+• e.g. sharing of the network with an attacker allows him to eavesdrop packets.
+Psychological acceptability –
+• design usable security mechanisms
+• security mechanisms should be transparent to the users of the system
+• e.g. using of root account to circumvent restrictions
+
+---------------------------------------------Lecture 2---------------------------------------------
+
+Psychological acceptability
+1.Human interface should be designed for ease of use so that the user applies the protection method correctly
+2.if the users protection goals match the mechanisms he has to use, mistakes will be minimized
+3.If the idea of protection needs has to be changed or are too difficult, errors will be made
+
+ATTACK: Phishing
+Social Engineering: you trick people into opening something or downloading something with malware, getting personal info from them
+Delivery: 
+spam-mail ->
+	Phishing email contains infected file that you click on and install or a link to a website where you put in your personal info or download and install malware (drive-by/with consent)
+
+	Spam = sender/address forgery
+		SPF (path-based), DKIM (signature-based), DMARC
+	URL can be obscured(short URLS, IP address, hex code, cyrillic 'a')
+
+	picture in picture attack, opens up picture of a new window that is actually within first window
+	get user to visit bad site that looks like a real website
+social media ->
+	"in order to regain access to your account please visit bit.ly..."
+sponsored ads ->
+	sketchy ads on top of google searches
+network based attack -> DNS Spoofing, ARP Spoofing
+Countermeasures: phishing alert toolbars, pw management tools, 2-factor authentication, security awareness training
+Maltego takes info from internet & people search websites and creates a visual of the data collected
+
+Spam Email Issues: sender address forgery
+	Check by verifying SPF (path-based, proper link), DKIM (signature-based, proper domain), DMARC
+	However, you can obscure or mess with the URL
+
+Human Factor & Usability: Password case study
+	making password weak to change expired password immediately, writing down password somewhere, giving out pw if asked for it too much
+	large number of passwords to account for, mix of nums and symbols too, lengths and restrictions etc make pws annoying
+
+Good password: reasonably long, large character set but easy to remember
+	ex: Oh dear! Please wake up before 7!
+
+Attacks on Password Entry:
+	shoulder surfing, thermal camera, key-logger, pw sniffing, timing attack
+
+	timing attack: tells you when your passwords wrong based on when you put a wrong char
+Attacks on Password Storage: 
+	one-way encryption, pw cracking, rainbow tables, pw resetting
+Insider Threat: case study
+	access rights remain to data when person changes positions
+	downloading/storing company info 
+Insider threats can be 
+	non-malicious (accidentally releasing info, malware or spyware attacks)
+	malicious (unauthorized release of info/abuse of privilege, sabotage of assets that only employees can access, plant a backdoor)
+70% of fraud is insider while 90% of security is outside
+	
+technical controls for insider threat are encryption, access control, minimum privilege, monitoring, auditing and reporting
+non-technical controls are enforcing security policy(prohibit access to non-work sites,define access rights), security training and awareness, perform background and personnel checks, acceptable vs unacceptable behavior at work
+
+Insider Threat Study focuses on people who use or exceed authorized access to info systems
+Characteristics: current employees & former employees were equal in num
+				most were full-time in a technical position
+Motives: revenge
+	Goal was financial gain, theft of info, sabotage
+Nature of Attacks: after hours, sophisticated & unsophisticated tools, 			remote access
+Recommendations: disable access after leaving job, log and monitor activities, back up policies, avoid pw sharing, limit access only to when employee has to do something
+
+---------------------------------------------Lecture 3---------------------------------------------
+
+HTTP Requests
+	GET= requests data from a specified source, query string is set in the URL
+	POST = submits data to be processed to a specified resource, query string is in HTTP message body of POST request
+
+		Notes:
+			name/value pair appears on URL
+		string that can be used for Post Requests
+		difference between Get and Post
+			dont use Get to send sensitive info b/c it shows up in URL
+			and it shows up in browsers/servers LOGS
+			it shows up in browsing history
+			it shows up in bookmark
+		every request can be forged
+		USE POST!
+
+Cookies
+	server issues cookie
+	browser adds following  header to requests back to server
+	cookie issued from server, browser sends back cookie for every request
+	optional attributes: secure and Http Only has lack of security issues
+Same Origin Policy: keeps content that came from different origins from each other
+	web browser permits scripts contained in a web page to access data in the other web page only if both web pages have the same origin
+
+		Notes:
+		Way to keep content separate from one another
+		If web browser permits scripts, must come from same origin
+		with script you can access anything from origin page and change it,
+		script run on one page can modify stuff on another page of the same origin
+
+OWASP TOP 10
+	2017 -> 1. Injection 2. Broken Authentication 3. Sensitive Data Exposure
+	
+		Notes: attack vectors, weaknesses, IMPACT to determine ranking of web hacks
+
+Bypass client-side controls! This will restrict user input by
+	1. transmitting data from client side to prevent user from modifying client data
+	2. control data that user submits to server
+Modification of data transmitted is possible bc control is on the client side
+	Transmit data (set cookies), implement measures (HTML forms, script-based validation)
+
+Client side and user components are outside of the servers direct control
+	validate client generated data on server side of application, log and alert anomalies
+
+ATTACK: Broken Authentication
+
+Attacking Authentication
+
+Design flaws are that you dont want the design to be a certain way
+implementation flaws are that there are some problems with the way things function
+
+	Flaws: design 
+		no/minimal pw quality control, no failedlogins, telling you if pw or un is wrong and not pw/us
+		Unencrypted HTTP connection to transmit login credentials
+		pw change function/forgotten pw and vulnerable pw recovery methods
+		user impersonation functionality
+		backdoor password: if super awesome password matches with admins password, you can access everyones pws
+	and implementation
+		failed-open login (giving in wrong un/pw still gets you in)
+		multistage logins (bypass some stages, interfere w login transition flags(expired session), multiple user identities to do different steps)
+		randomly chosen questions are in HTML form field or cookies
+
+To secure Authentication:
+	use strong credentials, handle credentials secretly(not placed in URL), validate credentials properly(no filter/truncate when verifying password), prevent info leakage, prevent brute-force, misuse of change pw function (should only be accessible from authenticated session), prevent misuse of account recovery, Log,monitor and notify
+
+
+Attacking Session Management: If i get control of session, I get everything, without having to do password stuff
+you can obtain something from person like their cookies for their account and use that
+
+Weakness in Token generation:
+	tokens containing meaningful data 
+	predictable
+		concealed sequences 
+		time dependency 
+		weak random number generator
+		encrypted tokens using meaningful user info
+
+ECB Cipher: tokens received can be decrypted to recover meaning, each block of ciphertext will always decrypt into same block of plaintext, symmetric encryption: need same code to encrypt and decrypt
+CBC Cipher: super ciphered, before plaintext is encrypted, put against preceding block of ciphertext. Meaningful info appears random and meaningless when enccrypted
+
+if tokens are dislosed, doesnt matter how impossible it is to predict them
+Unsafe token handling: disclosing on network (over HTTP), in logs(in URL query strings), mapping of tokens to sessions(same token everytime user logs in, multiple valid tokens per user account), vulnerable session termination(keep lifespan of session SHORT!!)
+
+Token uses: pw recovery tokens sent to email, in hidden fields to prevent CSRF, used to grant one-time access to protected resources, used in "Remember Me" login functions, can see status of order when shopping
+
+Securing Session Management:
+Generate Strong Tokens!! RANDOM!!!
+protect tokens throughout their life (only over HTTPS, invalidate old tokens)
+LOG, MONITOR, ALERT (requests w invalid tokens should raise alerts)
+
+------------------------------------Lecture 4---------------------------------------------
+Obtain Password -> search home/office, guess pwd, key/logger, malware, cracking the pwd through brute force
+
+1. get password file for HW, we'll learn a technique today to access that
+
+Gathering and examining key application info
+	get tool to spyder all links for you
+	web spyder goes to page, identifies all links, goes to each link recursively until no new links are around
+	some menus are dynamically formed, so sometimes you have to direct the spyder
+To discover hidden content
+	web archives
+	you can tell by status what other methods to try (ie 500 = servers broken so maybe you can try some other parameter)
+
+INJECTION = #1 threat
+
+ATTACK: Injection
+	attack vector: almost any source of data can be an injection vector
+	security weakness: very prevalent, can be discovered upon examining code
+	impact: data loss, corruption, disclosure to attackers, loss of accountability, denial of access
+
+	OS Command Injection -> attacker supplies OS commands through web interface in order to execute OS commands on web server (in POST or URL line) (; || &&)
+
+	if you have access to someone elses web server and can access their OS command...
+	you can get PASSWORD file! remove all their files, look at their shit, file paths etc
+
+	Injecting via ASP -> tries to let admin/user input file/directory name and does listing in that directory
+
+
+to prevent OS command injection, use built in API and stop using these commands
+blacklisting means you dont allow certain commands, however Could be bypassed through encoding and stuff
+whitelisting is more secure because you only allow certain inputs and thats it
+web application principle of least priviledge- do whatever you need to do and nothing more
+
+	SQL Injection -> browser sends bad input to server causing it to execute malicious SQL query
+		Examples:
+		$user -> jane OR 1=1
+		-- after to be seen as a comment, wont be passed
+		deal w comment to craft a correct input
+	you can bypass authentication
+	This attack can happen because userInput is used as database info, not sanitized
+
+	User input can be injected into SELECT, INSERT, UPDATE
+
+	Exploitation techniques:
+	UNION ATTACKS:Identify number of columns so that you can union them with other columns (union can only be done w same number of columns)
+	then you can maybe see if there is a User table w passwords and usernames
+	BLIND INJECTION ATTACKS: Identify exploitable URL 
+		http://www.myvulnerablesite.com?id=1008 AND 1=1
+		Use a condition to identify a piece of data
+		http://www.myvulnerable.com?id=1008 AND substring(@@version, 1, 1)=5
+	REMOTE EXECUTION: arbitrary commands over database server
+
+How to prevent SQL Injection
+1. dont allow hacker to craft that kind of input: input validation, Sanitizing data by deleting or escaping
+2. bind string, user, parameter and only input as data, not as part of command 
+3. Least priviledge
+4. encrypt sensitive data
+
+ATTACK: CROSS-SITE SCRIPTING
+Cross-site scripting:goal is to be able to inject a script on a victims page
+	that way your page can run my stuff and the same origin policy is broken
+
+	attack vector: automated tools can detect & exploit all 3 forms of XSS, freely available exploitation frameworks
+	security weakness: 2nd most prevalent issue and found in 2/3 of all apps
+	impact: moderate for reflected and DOM XSS, severe for stored where credentials can be stolen or malware delivery
+
+	Stored XXS : Persistant
+		you dont need user to click on anything
+		script is injected directly into vulnerable web
+		users browser runs script when visiting the page
+		more intense than reflected CSS
+		compromises your database, whoever visits page will get compromised
+
+		ie: Samy's Myspace Worm, embedded malicious script on vulnerable page spreads to all those who click on that page, spreading attack
+
+	Reflected XXS : non-persistant
+		instead of having script stored in database, get victim to click on link (social engineering) w javascript code
+		you need to get person to click on a link
+
+		ie: victim goes on vulnerable site and clicks on something bad, gets attacker cookie or whatever, browser will run the script within
+		the vulnerable sites origin!
+		ie: Apache foundation issue tracking application, "help" message saying user had issues with projects in __link___ and infected several admins, getting their info. Attacker then used trojan horse to get usernames/pws of users
+
+	Note on Javascript: scripts embedded in webpages, executed by browser
+		(alter page contents, track events like keystrokes, read&modify cookies)
+
+	XXS Breaks Same Origin Policy bc scripts cannot access resources that do not originate from the same host as the script
+
+	Possible harms are virtual defacement(inject malicious data to feed misleading data to users), inject trojan functionality(login form that sends login data to server controlled by attacker), mine cryptocurrencies!!!! and escalating the client-side attack (capture browsing history, key strokes, whatever)
+
+	Countermeasures! input validation (check/sanitize), " onfocus="alert(document.cookie)
+
+
+ATTACK: Request Forgery
+captures users session token and now can use app as that user
+
+	Cross-Site Request Forgery 
+		exploits a websites assumption that all requests that originate from a users browser is the user
+		you click on one site, click on an attacker site and they send a request to the site you visited through their browser
+
+	Possible harms are transfering money to another bank account, change users pw, add/delete content from website, add items to shopping cart, modify delivery address of order, targets state changing requests
+
+	It works like... user logging into legit site and staying authenticated (bank) then visits attack site that contains CSRF code (sketchy link), then browser sends request to page user logged into (bank)
+	Attacker gets whatever without user knowing or consenting
+
+	**VICTIM HAS TO CLICK ON LINK THOUGH**
+		email w HTML content
+		exploited URL or script on page victim would visit while doing online banking
+
+	USER PREVENTION 
+		check origin of page
+		by opening a new browser, its a separate session
+		log off immediately
+		dont "remember me"
+	DEVELOPER PREVENTION
+		unpredictable tokens w added timestamp 
+		automatic logout
+		intermediate confirmation page
+
+ATTACK: XXE = XML External Entities
+	Attack vector: attackers can exploit vulnerable XML processors if they can upload XML or put hostile content in XML doc
+	Security Weakness: older XML processors allow specification of external entity 
+	Impact: data extraction, execute remote request from server, scan internal systems, denial-of-service
+
+Core Security Problem = we can input arbitrary things into server-side application, users can interfere w any piece of data transmitted (cookies, request params, HTTP headers),  send requests and submit params in different stages than expected, not restricted to only using web browsers.
+Users can control inputs so dont trust users input, clean it up, whitespace it, etc.
+
+-----------------------------Lecture 5----------------------------
+
+Challenges in Security:
+people who use system, needs to deal w changing environment, emergence of new threats,Security usually seen as more of an add on, without having system built based on it, expensive
+
+
+Security Activities 
+Requirements and Analysis
+	Functional Requirements
+		system allows users to view books info by category, will allow users to add new books info
+	Non-functional Requirements
+		UI will be suited for screens w certain dimension, will be available 99.99% of time for 24 hr pds
+
+	Data Flow Diagram (DFD)
+	Data flow between different entities
+	Yellow box is like an actor
+	processes, data stores and external entities to help know what goes on in your system
+	You cant have a data flow between external entities because there should be a process in between, nor between 2 data stores, also require a process in between
+	seeing in terms of data flow between processes
+		-external agent -> outside person/unit/system/organization that interacts w system; almost always office/dept/external org/business/system end-user
+		-data store -> data at rest, persons, places, objects, events, file or db
+		-process -> work performed by system in response to incoming data flow or condition
+		PROCESS ALWAYS GOES BETWEEN!
+
+	Security Requirements!
+	Threat Modeling/Security Risk Analysis
+Design -> ER diagrams
+	Threat Modeling/Security Risk Analysis
+Implementation -> code
+	Security Code Reviews
+Testing & Assurance
+	Security Testing/Penetration Testing/Security Configuration
+
+Security Risk Analysis & Management
+	Risk Management = method of identifying vulnerabilities, threats and assessing possible impacts, ensure that security is cost-effective and relevant to threats
+	Risk = Threat + Vulnerability + Impact
+	Risks = value of assets, likelihood of threats, likelihood of vulnerabilities
+	(others control threats, we control vulnerabilities)
+
+Risk Analysis Process Framework: Assets(cost/importance/impacts), threats (likelihood, severity, impacts), vulnerabilities(likelihood) -> risks -> security measures
+
+Security risk is the evaluation of the combination of likelihood of threat, likelihood of vulnerability and impact for a given state of a system. Risks need to be assessed to determine the level of security required for the assets that need to be secured.
+
+Risk Analysis Approach
+	Quantitative RA -> monetary/numeric value to asset val,threat freq,severity of vulnerability
+	Single Loss Expectancy formula = Asset Value x Exposure Factor
+	Annual Loss Expectancy = SLE x Annualized Rate of Occurence(freq of threat taking place in 12 month timeframe)
+	
+	Qualitative RA -> opinion & scenario based & use a rating scale 
+
+Residual Risk
+	Total Risk = threats x vulns x asset value
+	Residual Risk = (threats x vulns x asset value) x controls gap
+	Residual Risk = total risk - countermeasures
+
+Handling Risk
+	Risk reduction/mitigation- implement a countermeasure
+	Risk transference- purchase insurance to transfer a portion/all of potential cost of loss to 3rd party
+	Risk acceptance- do nothing, deal w potential loss&cost if risk occurs
+	Risk avoidance- discontinue activity
+
+Threat Modeling: uses models to find security problems, use of abstractions to help in thinking about risks, lets you find issues in things you havent built yet, process to understand security threat to a system, KEY TO A FOCUSED DEFENSE
+
+Threat Modeling Process: 
+	1. What are you building: characterize system
+		Diagrams
+		Most threats occur across boundaries
+		you need to identify trust boundaries in your system (who controls what)
+	2. What can go wrong: find threats
+		Don't think like an adversary!! Too unstructured
+		More structured way is to identify your assets, then identify the threats on those assets
+		Threat modeling approaches: focus on assets, focus on attacks, focus on software
+
+		Attack Trees: goal is root node, different ways of achieving goal as leaf nodes
+			1. identify possible attack goals-these represent weaknesses in security system
+			2. construst attack tree for each goal
+			3. consider all possible attacks (subgoals) against goal in AND/OR decomposition
+			4. repeat for each subgoal
+
+		STRIDE (focus on software)
+			Spoofing: pretending to be someone/something your not (Spoof w web browser)
+			Tampering: modifying something youre not supposed to (Tampering w web browser: request forgery)
+			Repudiation: claiming you didnt do something (if you send a message, you cant deny having sent it)
+			Information Disclosure: exposing info to unauthorized peep(if a process leaks out a friends grade to you, thats a confidentiality issue)
+			Denial of Service: reducing ability of valid users to access resource(if you cant access your submission at the end of the due date)
+			Elevation of privilege: when unprivileged gains privileged status (you can try to gain access to a process that you dont have authorization to)
+		you can apply STRIDE to each element (external, process, data store, data flow)
+	3. What should you do about what can go wrong: address threats
+		Mitigate threats- reducing the risk by making it harder for an attacker to take advantage of a threat (with countermeasure).
+			ie: Spoofing person -> strategy: identification & authorization
+			ie: Tampering w file -> strategy: OS
+			ie: Logs come under attack(repudiation) -> strategy: protect logs
+			ie: network monitoring(info disclosure) -> encryption
+		Eliminating threats – removing the function/feature associated with the risk
+		Transferring threats – letting someone or something else handle the risk
+		Accepting the risk – accepting the risk that is not worth the expense or cost
+	4. Did you analyze well: check work
+		check model: ensure final model= what you built
+		check each threat: did you do right response & did you find all the threats
+		check your tests: make sure you built a good test to detect problem
+
+Threat model so that you understand security reqs, find problems while there is time to fix them, build mitigation into design, address other issues
+
+-----------------------Lecture 5----------------------------
+
+Types of requirements: 
+	Functional requirement (behavioral) - something the system must do. Describes a function to be provided by the system in terms of an operation that can be used by an agent
+	ie: system shall allow user to edit her personal data, FB things
+		technical(time),software/hardware
+
+	Nonfunctional requirement (NFR) - a property or quality the system must have
+		ie: security,performance,availability, confidentiality
+
+		Quality Requirements
+		ie: temp control cycle must execute in 100 milisec
+		
+		Constraints requirements - Imposed by the client or the environment in which the system operates. 
+		ie: system shall provide personnel info only to HR
+			cost, operation(tech support/storage space)
+
+Challenges of requirements phase: users often cant voice requirements, unclear, late feedback, cant handle changes in reqs, conflicting reqs
+
+To deal w requirements that are weird: early feedback,ask for more specific requirements,user story ("As a user, I want to ____")
+
+Specification Properties: Requirement validation involves checking that the specification is complete
+(all possible scenarios through system described), consistent(no contradictions), unambiguous, and correct(accurately represents system that client needs and that dev intends to build)
+
+requirements are for stakeholders: users, investors, mgmt, sw developers, anyone who interacts w the system, customers, clients, whoever has stake in the system being a success or not
+
+Security Goals: A security goal is something that any stakeholder wishes to achieve or avoid. It’s a general statement about the security of an asset, e.g.
+• The system shall prevent/detect action on/to/with asset.
+
+Goals (broad behavior of system, apply to entire system, not testable) VERSUS requirements(specific, apply to functional reqs, should be testable)
+
+Determining Security Goals
+Identified by:
+	-Applying the management principles (least privilege, separation of duties, audit trails etc.) to the assets and business goals of the system, based on threat identification (Security goals are constructed by specifying that the action(s) on the asset(s) listed in threat descriptions be prevented.)
+	-Asset Identification: Personal Information
+	-Harm Identification: possible hard to personal information
+	-Confidentiality, Integrity, Availability
+
+Defining Security Requirements
+	Internal Sources – systems specification, functional reqs, threat modeling
+	External Sources – Regulations and Compliances, national privacy laws
+
+Analyzing Security Requirements
+	Verification- analysis of an artifact on its own, ensuring its completeness and internal consistency
+	Validation- relationship of the artifact to the artifacts from which it is derived
+
+Security requirements satisfaction arguments are in 2 parts
+• The ‘formal’ outer argument – constructed based on the behavior specification for the system
+	-Uses claims about system behavior to demonstrate that the security requirement is satisfied in a system that confirms to the behavior specification
+	-Using a chosen logic, perform proof that the security requirement is satisfied.
+• The ‘informal’ inner argument – constructed to support the outer argument.
+	-The inner argument is a set of informal arguments that support the claims used in the outer argument.
+
+Ex of Security Requirements/Goals
+-Identification requirements:Specifies the extent to which a business, application, component, or center shall identify its externals (e.g., human actors and external applications) before interacting with them.
+-Authentication requirements:Specifies the extent to which a business, application, component, or center shall verify the identity of its externals (e.g., human actors and external applications) before interacting with them.
+-Authorization requirements:Specifies the access and usage privileges of authenticated users and client applications.
+-Integrity requirements:Specifies the extent to which an application or component shall ensure that its data and communications are not intentionally corrupted via unauthorized creation, modification, or deletion.
+-Intrusion detection requirements: Specifies the extent to which an application or component shall detect and record attempted access or modification by unauthorized individuals.

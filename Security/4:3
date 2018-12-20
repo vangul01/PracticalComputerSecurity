@@ -1,0 +1,67 @@
+4/3
+Security Lecture
+
+Touchpoints
+	Code review is #1 in approaching w security mindset because you start with code
+
+Vulnerabilities in Code
+Things that try to protect you: network, browser
+
+How to improve code: code reviews, know potential exploits, potential vulnerabilities in your own code
+	common security bugs and attack strategies -> cve is a directory of the known vulnerabilities
+											   -> nvd is database of known vulnerabilities
+											   -> cwe is common weakness enumeration, exploit database too
+	course-code audits = have people check out your code, code reviews done when not running the code, its usually someone elses 	code you are reviewing
+	source to sink analysis : check user controllable input, check to see where it ends up
+
+Example (3) youre getting request title from user input
+Example (5) redirect, if you can provide your own URL in the querystring for your own destination, it can help the attacker to 	perform phishing attacks because the attacker can send a link to a victim and they will be redirected to the attackers page
+Example (5.5) wants to get a redirect URL from ... wants to add // to prevent it from getting redirected to other sites
+Example(8) buffer overflow if you make length of what your copying greater than what you want it to be copied to
+Example (9) user has the ability to set a string to something else and cause buffer overflow
+
+Seven Pernicious Kingdoms
+1. Input Validation & Representation
+	SQL injection, Injection, everything on the client side can be modified
+	separate data and input in prepared statement
+	if you pass empty first and empty last name, nothing will be concatenated, there wont be any WHERE clause
+	the issue is that youre seeing things youre not supposed to see
+	owasp.org/....code review guide v2 . pdf
+
+	dont have unescape after validation, should be Before
+	cannonical path= ..\ moves you up one directory
+
+	To handle this issue, you should do white listing
+
+API Abuse is that the caller and callee should have contracts or something
+
+dont handle errors (try/catch) if its too generic because then it will catch everything
+	notify user that user data will be protected, clean up and gracefully terminate the program
+
+disable stack frame, go to configuration which is for production environment
+if code is using obsolete function, it tells you that there is probably more kinds of functions like that one
+
+7. Encapsulation= you want to make a strong clean boundary, and to make sure that trust boundaries are not crossed
+	if user has not been authenticated, it should be unvalidated (I think...)
+
+lists of tools to use to check for vulnerabilities in your code. They will tell you a list of vulnerabilities
+free open source and commercial tools, pick the one that works best for you
+	the tools pinpoint to the areas that might be vulnerable
+
+Issues with static analysis (aka running tools to check for bugs)
+	just cause they didnt find any bugs doesnt mean there arent any.
+	leads to false sense of security, too high a chance of false positive -> tool reports bugs that program doesn't contain
+	if too many false positives, users stop using it
+
+to improve security in your code: OWASP Code Review Guide v2
+
+4/10
+4/17 
+4/24 Project Presentation (15 min)
+5/1 Final 
+5/8 NO CLASS!
+
+
+
+
+

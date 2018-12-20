@@ -1,0 +1,71 @@
+2/6/2018
+Lecture 3
+Computer Security
+
+To try out hacking legally
+	Bug Bounty Programs
+
+5
+Referer: who referred you to another page, click on link on a page, page is referrer
+6
+name/value pair appears on URL
+string that can be used for Post Requests
+difference between Get and Post
+	dont use Get to send sensitive info b/c it shows up in URL
+	and it shows up in browsers/servers LOGS
+	it shows up in browsing history
+	it shows up in bookmark
+every request can be forged
+USE POST!
+7
+you can do attacks based on responses from servers
+8
+cookie issued from server, browser sends back cookie for every request
+optional attributes: secure and Http Only has lack of security issues
+9
+Way to keep content separate from one another
+If web browser permits scripts, must come from same origin
+with script you can access anything from origin page and change it,
+script run on one page can modify stuff on another page of the same origin
+14
+attack vectors, weaknesses, IMPACT to determine ranking of web hacks
+16
+confidentiality - whatevers being communicated is unreadable, encrypted
+authentication - this is exactly the person youre talking to if you see the certificate
+	if browser shows certificate can be validated, its who you think they are
+19
+server and web developer should not trust anything on client side, everything can be forged
+	ie use cookies, user cant modify cause itll be seen
+20
+whatever is hidden value on a form can still be modified
+	save file and locally run it
+	set up a web proxy
+Burp Suite- turn on web proxy to point to certain IP
+			intercept and modify, send request back to server
+You can modify outgoing and ingoing
+24
+hidden or disabled field was probs for testing purpose and was never deleted, 
+try sending back to server with value and maybe itll still accept
+25
+validate on the server side since youre not going to trust anything from client side
+log and alert weird inputs, multiple attempts
+27
+using HTTPS to transmit login info is secure enough? Yes
+multifactor login will help improve security? Yes!
+
+The Web Application Hackers Handbook CH 1 - CH 7
+28
+Design flaws are that you dont want the design to be a certain way
+implementation flaws are that there are some problems with the way things function
+34
+backdoor password: if super awesome password matches with admins password, you can access everyones pws
+41
+If i get control of session, I get everything, without having to do password stuff
+you can obtain something from person like their cookies for their account and use that
+50
+symmetric encryption: need same code to encrypt and decrypt
+
+
+
+
+

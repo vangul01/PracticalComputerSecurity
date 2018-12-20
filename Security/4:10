@@ -1,0 +1,75 @@
+4/10
+Security Lecture
+
+HW4 is due May 1st
+Everything from lecture 1 -> presentation week can be on the final
+
+Security Testing
+Software Testing vs Security Testing (emphasizes what an application should NOT do)
+
+testing can only show that bugs exist, not that bugs dont exist
+its more likely to find more bugs when you see one because programmers usually make similar 	mistakes throughout the program
+you wouldnt fix a bug you knew about because you might not have time to do so
+	also, if you fix this problem, it might reveal and create more problems
+	bugs found later cause more defects
+the goals of a software tester are to 
+	find bugs early on, fix bugs
+
+TERMINOLOGY WILL NOT BE ON EXAM
+
+black box testing -> you cant see code, you do input and see output
+
+	equivalence partitioning
+	*boundary value analysis* if values are 1-31 youd test 0 and 32, and ascii code vals too
+
+white box testing -> you can see the code, see how its implemented in detail, 
+					 code gives you extra knowledge and you can come up w more test cases
+
+	control flow testing
+	junit to test java code with multiple tests
+
+Security Testing = cover the attackers mindset as well, covers security functions
+
+	white hat = developer tested, testing for positives and that everything works as it should
+		ie: verify that account is disabled after 3 attempts to login
+			illegal characters are stripped out of URL
+
+	black hat = testing for negatives, intentional attacks cannot compromise the system
+		ie: system shall not allow for data to be altered or destroyed, system shall not be compromised if stuff goes wrong
+
+	once you combine stuff or make changes to network settings, you cannot assume that it will be secure
+
+**Penetration Testing: testing for negatives approach/black-box testing 
+	closely resembles what an attacker would do
+	*a system that fails penetration testing is know to have faults; one that passes is known only to not have the faults that were tested for
+	NOTHING IS CERTAIN!
+
+	in order to test something, you need to have prior knowledge of what must be tested
+
+FOR HW 2: sessionID = whatever is PHPSESS cookie, edit GET 302 to 200 from search page
+
+for Nmap you shouldn't do against other peoples permission
+nmap (machine, IP address) and you can see the port and domain of that IP
+	if some ports are available, you can try
+sudo nmap -O IPAddress
+	-O is to detect what kind of service is being used at a certain port
+sudo nmap _A IPAddress (-A is aggressive scanning)
+
+metasploit = run in your VM, dont try w other peoples stuff
+msf > show exploits 	
+msf > search				search for certain exploits ie: mysql exploits
+msf > search mysql_login
+msf > info 
+msf > use (youre gonna use a specific module)
+
+msf > set USERNAME root
+msf > info
+msf > run		(wont work cause root isnt a username....BUT if you had a log of un/pws...)
+
+metasploitable = server you can try metasploit on
+
+once you get into someones server, you can insert backdoor, upload malware, etc
+google hack db
+
+***nessus.org scans for vulnerability
+

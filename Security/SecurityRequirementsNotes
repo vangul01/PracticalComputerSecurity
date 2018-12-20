@@ -1,0 +1,122 @@
+2/27
+
+1 source of security probs: not considering security requirements of system, not considering security application itself
+1 adequate security requirements = reqs that lead to systems security goals being satisfied
+2 ASR must satisfy definition: know what the reqs are 	
+	assumptions: object in system will behave as expected
+	satisfaction: do reqs satisfy security goals?
+3 trust assumption: choices to trust domain to behave as expected
+4/3.3 security requirements are constraints on systems functional requirements
+						express systems security goals in operational terms
+4/3.4 support artifacts are artifacts that help to develop, analyze, or justify the design of core artifact
+core artifacts are recognizable stages that produce artifacts that are successively closer representations of working system
+3.5.2 to identify security goals: 
+
+1) identify candidate assets 
+	find all resources in system context that might have value
+2) select management principles to apply
+	functions that system provides must be compared to management principles organization wishes to apply
+3) determine security goals
+	determine whether harm analysis must be done for assets
+
+pg 8/4 security requirements satisfaction arguments are in two parts: outer (uses claims about systems behavior) and inner (supports claims used in outer arg)
+
+5.1 Security requirements Anaylsis
+	First Iteration
+	During this first iteration, we establish the context for the
+	system, the functional requirements, and the primary
+	security goals and requirements
+		Step 1 Identify functional requirements
+			identify the functional
+			goal(s) of the system under analysis, describe the context,
+			and identify the functional requirement(s).
+		Step 2 Identify Security Goals
+			determining the assets involved directly or indirectly
+			with the system, the harm that the assets can suffer, and,
+			finally, the security goals to avoid those harms.
+		Step 3 Identify Security Requirements
+			determine the constraints to place on the functional
+			requirement
+		Step 4 Satisfaction arguments
+
+
+Outer arguments:
+if the assumptions are valid and if the behavior
+specification is correct, and if there are no other behaviors, then
+the system can be secure.
+
+____________________________________________________________________
+Requirement: more than functionality...necessary/needed functionality
+	requirements are for stakeholders: users, investors, mgmt, sw developers, anyone who interacts w the system, customers, clients, whoever has stake in the system being a success or not
+Other requirements:
+----non-functional requirements
+	security
+	performance
+----these are more like constraints
+	cost
+	operation(tech support/storage space)
+----Functional requirements
+	technical(time)
+	software/hardware
+	ex FaceBook (send messages, upload photos, like things, find friends)
+
+NonFunctional Requirement = constraints, enjoying using product, availability, confidentiality
+
+Problems with requirements:
+keep changing
+too vague/too specific
+primary requirements requiring secondary requirements
+requirements that are impossible to fulfill
+stakeholder doesn't know what they want
+requirement that's not worth it
+
+To deal w requirements that are weird:
+early feedback
+ask for more specific requirements 
+user story ("As a user, I want to ____")
+
+Security Requirements = Nonfunctional Requirements
+
+assets protect -> only authorized users can access db
+reduce harm -> encrypt data 
+
+perform threat modeling to identify potential threats to your system
+	from this you can identify your security goals
+	attack trees, other stuff
+
+security goals -> determined through attackers point of view
+	protect unauthorized access to user data
+	protect system from shutting down/being denied service/ensure availability
+	detect unusual activities
+
+Instead of being vague, focus on protecting the most important things
+
+Functional Requirements 				Security Goals
+										constraint to functional requirements
+provide personal info					provide personal info to authorized users
+
+temporal constraint on
+providing personal info					once person leaves HR, person shouldn't be able to access info	
+										if inactive for a certain amount of time log out
+										provide info only during office hours				
+
+
+**no negative requirements because they are hard to validate and verify, you want to know if your
+implemented system can verify your functional requirement
+
+How can you make sure your security requirements are satisfied? 
+	Go through several iterations, you can define more security requirements, goals etc but does not answer how you can make sure SR are satisfied
+
+	Do satisfaction arguments (outer and inner argument)
+
+MidTerm
+
+1 sided A4 typed or handwritten 1hr50min
+Week 1 until feb 27 plus HW 1 and HW 2
+written answers
+UNDERSTAND 8 principles from 1st class
+which principles apply to each scenario
+go through papers too
+for HW 1 understand how the passwords are stored
+
+

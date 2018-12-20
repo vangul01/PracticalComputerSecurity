@@ -1,0 +1,96 @@
+Lecture 2 1/30/2018
+Computer Security
+
+-3 topics for today: phishing attacks, passwords, insider attacks
+
+to steal login credentials
+-brute force
+-social engineering (phishing attacks)
+-searching
+-installing key logger
+
+attack techniques tie threat with vulnerability
+
+2.4
+-take credentials without them knowing you took them
+-with login credentials --> identity theft
+-mass emailing phishing attacks
+-spear phishing is targeted to an individual
+	ie Dear Jeff
+-whaling is targeted to CEOs or execs of a company
+
+2.5
+-is email directed to you?? is grammar correct? where is it coming from? requires immediate action/urgent
+-you can also hover over the link and see where it is directed to
+-uses fear tactics...someone tried to take out money from your bank, something went wrong, download this link
+
+2.6
+manage account -> security google to know what apps have access
+
+2.8
+2 ways to check if email came from a specific domain or not, whether its spam or not
+1. Sender Policy Framework (path based)
+	sender of email will publish IP address of post, checking how email traversed path 
+2. Domain Key Identified Mail (signature based)
+	Sender has public key available, you can check if message was sent from particular domain or not with security key
+These dont check against the "from" field of the email, only if its coming from correct domain
+
+We need DMARC! Will check if particular domain is the same as the "from" field
+
+2.13
+-attackers can obscure URLs very well
+-Punycode is representation of UNICODE in ASCII, to protect browsers from lookalike domain names, they makes the domain name change if one char is in a different language
+-to check, you can check the certificate
+
+2.15
+-to detect picture in picture attack, always have browsers in max
+
+2.18
+-DNS Spoofing attack is changing IP address to go to attackers IP address
+
+2.21
+-phishing alert toolbars in firefox, it changes the color of the toolbar
+-will check against phishing tanks database, will identify if one of phishing website is one of the ones that are in the database
+
+2.23
+-password management tool (lastPass) will only autofill on the correct website, lastPass will help you 
+
+2.27
+-we get trained to click on links because legit companies send us links to click on
+
+2.29
+-Maltego collects info on people
+-toolkit can help you clone sites, but dont do it unless you can anonymize yourself
+
+2.36
+-Hash your password to make it unreadable, you cannot reverse back
+
+169 --> 20 nanoseconds to crack
+1d09_wk@!dj3 --> a long ass time
+
+avoid words that exist
+use sentences or phrases as passwords
+
+2.36
+-to get a keylogger onto someones computer...
+	have it downloaded from email
+	inject it into vulnerable website
+
+1.38
+-timing attack: you can tell how much of the password is correct based on the time it takes to tell you the passwords dont match
+
+1.39
+-a fix for this is to read through the whole passwords and not return false upon encountering an unmatching character
+
+1.40 
+-introduce a random number (called salt) into password
+-instead of just hashing your input, you first add the salt and then hash it to get a different output
+-when we store passwords, we store with one way encryption, you decipher but dont decipher back
+-rainbow tables are precomputed hash
+-once you have access to a password file, you just have to check if the hash matches with a precomputed table
+-This is why salt is important, once added to precomputed hash, you get different pw
+
+1.44
+-insider threats are 
+
+

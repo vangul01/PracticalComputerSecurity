@@ -1,0 +1,83 @@
+3/20
+
+Security Lecture
+
+instructions, registers(in x86 there are 6 general purpose registers)
+registers: eax, ebx, esp, ebp, eip
+
+mov copies whatevers in one reg to another reg
+movl copies whatevers in one reg to mem that is 4 offsets from where ebp is
+
+static data is global vars 
+stack has static and local vars
+heap dynamically created data like malloc
+
+compiler pushes args in reverse order onto stack -> first in last out
+return address stored on stack (eip) 
+
+main() stack frame is being pointed to by the base pointer (ebp)
+callers ebp is saved onto stack
+
+local variables are pushed onto stack the same order they appear in the code
+
+base pointer ebp
+stack pointer esp always points to top of stack
+*drawings in planner
+
+Buffer Overflow Vulnerabilities
+more data stuffed in mem 
+-execute malicious code
+-corrupt valuable data
+-get data
+
+strcat/strcpy unsafe versions of functions in C/C++
+
+find where ebp was previously and put it in your string in hex
+"AAAAA\xf8\xf4\xff\xbf\x4f\x84\x04"
+
+after break point 
+continue   to go past breakpoint
+you can skip over the instruction to do n+1 and it will return 1 
+Question marks signs are that there isnt ASCII representation for that format
+
+when you break, its just Before where you want
+
+to override, do 6-9 1s in the string so that you can override verify having to be equal to 0, you will make your string equal to verify
+
+//correct version in paper is 10, not 12 or 8 
+
+Step 1:
+write whatever you wrote and convert it to machine code
+Step 2:
+get the address for instruction pointer and insert your code at the pointer
+
+nop sleds are instructions that dont do anything and just skip
+if you insert a lot of nop sleds in front of your shell code because it will do nothing until it reaches your code
+
+spawning a shell
+execve stops the current program and runs the program that points to your program
+execve(program that will print whatever is in the args, arg) and it skips over whats after it
+
+get the hex for each line of code of your instructions
+you can do this by
+gdb
+object dump: objd 
+
+*Read the paper for help*
+
+Skipping an instruction:
+gets(buf) is an unsafe function
+
+takes in user input
+if you attempt doing /x5/xhex/code, it will literally input it
+so you have to change your input to hex somehow
+('A' * 500) for input thats 512 maybe, you can mult number of times char will be printed
+
+canary values can be used to signal modifications in stack
+people put canary right before stack pointer so if there is modification to it, you'll know
+
+unsafe -> safe
+gets() -> fgets()
+strcpy() -> strncpy()
+strcat() -> strncat()
+sprintf() -> snprintf()

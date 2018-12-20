@@ -1,0 +1,158 @@
+Final Review Security:
+
+
+CHAPTER 6: SECURITY REQUIREMENTS
+Types of Requirements:
+Functional(behavioral)=something the system MUST DO(system SHALL allow user to edit her personal details)
+Nonfunctional Requirements=property or quality the system MUST HAVE
+	Quality req:temp control must execute completely in 100ms
+	Constraints req:Imposed by client or environment of system(system shall provide info ONLY TO members of HR, must be able to dynamically interface with other games)
+Challenges of requirements: users unable to voice requirements/unclear reqs/late feedback from clients/conflicting reqs 
+Possible solutions: agreement of contract/frequent communication
+Specification properties: requirement validation involves checking that the specification is complete, consistent, unambiguous and correct.
+Specification Properties: complete if all possible scenarios through system are described, consistent if no contradictions, unambiguous if exactly 1 system is defined, correct if represents system client needs and developers intend to build
+Security Goals=something any stakeholder wishes to achieve or avoid(system shall prevent/detect action on/to/with asset). Broad behavior of system, not testable
+Security Reqs=More specific in scope, apply to functional reqs, testable. Functional req that describes function to be performed by system or constraint on functional req.
+Determining security goal: can be identified by harm identification (possible harm to personal info) or asset identification(personal info)
+Security Reqs satisfaction args:
+	formal outer arg:constructed based on behavior spec for system(security req satisfied in system that confirms to behavior specification, conclusion is the satisfaction of security reqs)
+	informal inner arg:constructed to support outer arg(can use rebuttals to express conditions under which arg doesnt hold)
+	To remove rebuttals=introduce new functionality or control
+Identification reqs:specifies extent to which business/application/component shall identify externals before interacting w them (application shall identify all of its clients before allowing them to use its capabilities)
+Authentication reqs:specifies extent to which business/application/component shall verify the identity of its externals before interacting w them (application shall verify the identify all of its clients before allowing them to use its capabilities)
+Authorization reqs:Specifies access and usage privileges of authenticated users and client applications (application shall allow each customer to obtain access to all of her own personal account info)
+Integrity reqs:Specifies the extent to which an application or component shall ensure that its data and communications are not intentionally corrupted via unauthorized creation, modification, or deletion (The application shall prevent the unauthorized corruption of emails and their attachments that it sends to customers and other external users)
+Intrusion detection reqs:Specifies the extent to which an application or
+component shall detect and record attempted access or
+modification by unauthorized individuals(The application shall detect and record all attempted accesses that fail identification, authentication, or authorization reqs)
+
+CHAPTER 7: APPLICATION ATTACKS MEM SAFETY EXPLOITS___________________________
+stack grows down, heap grows up
+Mem Allocation on the stack:
+
+Stack(storage for called function and return data)		high addresses
+heap(storage for dynamically created data) 	
+static data(global variables)
+Code/Text(instructions of the program)					low addresses 
+
+Memory allocation->buffers, EXAMPLES OF HOW STUFFS PUSHED ON STACK FRAME(pg 10)
+ex: 
+void func(int x) {int a=0; int b=x;}
+int main() {func(10);}
+				 esp	    esp			esp
+|        | 10 | 0 | mains EBP| return add| 10 |
+low address      ebp 						high address
+
+ESP keeps getting moved to low addresses, EBP points to top of stack (higher address) 	 
+
+VULNERABILITY: BUFFER OVERFLOW
+	more data is put in buffer(memory block) than it can hold
+	ATTACK: steal private info, corrupt valuable info, execute malicious code
+	EXAMPLES: strcpy operates on null terminated strings, doesnt perform bound checks, data is overwritten in adjacent memory in buffer overflow, you get SEGV because address is outside of the process address space, skip instructions, injected data causes crash, security variable is overwritten.
+
+ATTACK:Execute malicious code
+1.Load code into mem(must be assembly code)
+2.Get instruction pointer to point to it(find correct return address)
+COUNTERMEASURES:stay within bounds/check lengths before writing/limit input to certain characters/limit programs privileges/canary values
+
+0x11223344
+Big endian(11223344-big end first)/little endian(44332211-little end first): different ways to store in mem
+
+CHAPTER 7: APPLICATION ATTACKS PT 2__________________________________________
+VULNERABILITY: OFF-BY-ONE
+	miscalculating condition to end a loop(ie: i<=10 vs i<10)
+	NULL Termination=null byte written beyond end of buffer, some strings always place a NULL terminator at the end of a string, single byte of mem overwritten
+	(ie: strncat())
+ATTACK: overwrite EBP to execute malicious code,stack frames location of caller function changed which means local var and return address changes SO you can write a bogus stack frame, execute arbitrary code after function returns.
+
+VULNERABILITY: INTEGER/ARITHMETIC
+miscalculations of buffer size, occur when an operation on an int value causes it to increase/decrease past what it should. Also related to SIGNEDNESS BUGS, usually results in "wrap-around" value
+
+VULNERABILITY: FORMAT STRING
+%n is most dangerous-causes number of bytes output so far to be written to address of pointer passed in as the associated parameter
+ATTACKS: Crashing the system=printf ("%s%s%s%s%s%s%s%s%s%s%s%s"); Viewing the stack=printf ("%08x %08x %08x %08x %08x\n"); Viewing memory at a location as specified=printf ("\x10\x01\x48\x08 %x %x %x %x %s"); Writing an integer to a location in the process memory printf ("\x10\x01\x48\x08 %x %x %x %x %n”);
+CAN:
+∗ Overwrite important program flags that control access privileges
+∗ Overwrite return addresses on the stack, function pointers, etc
+
+CHAPTER 9:Secure Coding______________________________________________________
+Exploit=program or technique that takes advantage of security vuln to violate explicit or implicit security policy
+Vulnerability=set of conditions that allows attacker to violate an explicit or implicit security policy
+	Bugs=introduced during software implementation(buffer overflow)
+	Flaws=introduced during software design level(error handling problem)
+Mitigation=methods/techniques/processes/tools that can prevent or limit exploits against vulnerabilities
+	@policy and procedure level=background checks,type-safe lang
+	@system/network level=multi-factor auth, network intrusion detection system
+	@source code level=replacing unsafe functions
+How to improve our code?
+Know common security bugs/attack strategies, secure coding practice, source-code walkthroughs
+Ex:enforce all authenitication controls on server, pw hashing must be done on trusted system, use only HTTP POST requests to transmit auth credentials, all auth controls should fail securely
+SEVEN PERNICIOUS KINGDOMS: help developers understand coding errors and recognize categories of problems that lead to vulnerabilities
+1.Input validation and representation: failure to account for untrusted input(ie:buff/int overflow, XSS,format string, SQL inj)
+	TRUST BOUNDARY SECURITY:Programs must take steps to ensure data received across trust boundary can be appropriate, not malicious. Validation=make sure input data falls in boundary. Sanitation=ensure data conforms to reqs of subsystem to which its passed. Canonicalization=lossless reduction of input to equivalent simplest form. Normalization=conversion of input data to standard form.**Canon and norm before validating**
+2.API abuse: API establishes set of rules that callers and callees need to follow. Caller must check value returned from callee.
+3.Security features: Insecure use of security features can leave software system unprotected. Focus on authentication/access control/confidentiality/cryptography/privilege management
+4.Time and state: Unexpected interactions, failure to begin new session upon authentication. Be carfeul using functions that use filenames instead of file handles.
+5.Errors: Unhandled errors may have unexpected results and cause program to crash or terminate. Error handling should fix problem or notify user and terminate gracefully**don't expose sensitive info in exception messages**
+6.Code Quality: Poor quality leads to unpredictable behavior(ie:use of obsolete functions)
+7.Encapsulation: strong trust boundaries, make sure functionality or data doesnt cross trust boundaries and cause contamination(ie:escalation of data access privileges)
+*Environment: everything thats outside of source code but is still critical to security of product being created.
+Static Analysis:examine text without attempting to execute, performed as part of code review. Most important is knowlege build into code of secure coding rules
+	Benefits=reduce costs over system lifetime,educate devs about secure programming, automates repetitive and tedious aspects of source code checks
+	Issues=rely on already known/fixed pattern of rules, human eval still required, doesnt detect design or architctural level flaws-only meant for source code, false sense of security
+
+CHAPTER 10 SECURITY TESTING__________________________________________________
+Verification=does software meet specification? 
+Validation=does software meet user requirements?
+Functional Testing Steps:
+1.Identify requirements that softwares expected to perform
+2.Create input test data based on functions specifications
+3.Determine expected output test results based on functions specs
+4.Execute test cases corresponding to functional reqs
+5.Compare actual and expected outputs to determine functional compliance
+Black-box testing/functional testing=tester only knows what software is supposed to do but cant see how it operates
+	Approaches to generate test inputs= equivalence partitioning(reduce infinite set of test cases to few effective cases); boundary value analysis(test the boundaries)
+White-box testing=tester has access to program code and can examine it for clues to help with testing
+	Approaches to generate test inputs= control flow testing(use program layout to make test cases, code coverage analysis=find areas of program not excersized by set of test cases, increase coverage); data flow testing=track piece of data throughout program
+Security Testing=cover attackers mindset and security functionality
+White-hat testing=test for pos, ensure features work as advertised
+	Test-to-pass=ensure everything works
+	Functional Security Testing=testing security mechanisms to ensure functionality is properly implemented, uses pos requirements(authentication mechanisms,error handling)
+Black-hat testing=test for neg, ensure attacks cannot easily compromise system
+	Test-to-fail=try to break program
+	Risk-based Security Testing=simulates attackers approach(system shall not allow for data to be altered/destroyed or for system to be compromised/misused)
+	Penetration testing=once software is complete and installed in op environment
+	Steps: goal->info gathering->attack->report
+Unit Testing=testing in coding phase
+
+CHAPTER 11: MALWARE_____________________________________________________________
+Malware=instructions that run on victims comp that allow attacker to make system do what they want(worms,viruses,backdoors,trojan horses,rootkits)
+
+ATTACK: VIRUS=self replicating code that attaches to other programs(host) and requiring you to click on it
+COUNTERMETHOD: ANTIVIRUS=works by static analysis(virus signature), heuristics(unseen viruses exhibiting certain behaviors), integrity verification(detecting unauthorized changes to file system)
+Malware self preservation techniques:stealthing(concealing presence of malware-preserve OG file size and pretend to be normal code), obfuscation techniques
+	OBFUSCATION TECHNIQUES: dead-code insertion(inserting nop to change appearance), register reassignment(switching regs from generations), subroutine-reordering, instruction substitution(replacing some instr w equivalent ones), code transposition(reorder sequence of inst of original code), code integration(integrate code to code of target program)
+
+ATTACK: WORM=self-replicating code spreads via networks and you dont have to click on it, faster to take over vast number of machines, harder to trace back, increase damage
+Elements of a worm:1.gain access to target system through exploits(buffer overflow,file-sharing,email) 2.transfer to target 3. look for new victims(thorough email,random IPs, host lists, network neighbors) 4. scan victims for vulns 5. execute payload(consume bandwidth,open backdoor,DOS,crack encryption keys,remove files/deface website)
+
+ATTACK: BACKDOOR=program that allows attackers to bypass normal security controls on a system gaining access on the attackers own terms(remote execution of commands, gain command shell, control GUI of victim remotely) and run with permission of user
+Backdoor Access Types:local escalation of privileges, remote execution of commands, remote command-line access,remote control of GUI
+How to install backdoors: exploits(buff overflows,system misconfigs),automated programs(viruses,worms),tricking user into installation(email,file-sharing)
+
+ATTACK: TROJAN HORSES=program that appears to have useful or benign purpose but really masks hidden malicious functionality, tricks user to download and install
+To Trojanize software: change name,combine backdoor with legit program using wrapper, insert code into software product during software development and testing
+
+ATTACK: ROOTKITS:trojan horse backdoor tools that modify existing OS software so an attacker can keep access to and hide on machine
+
+DEFENSE AGAINST MALWARE=deploy patches,update AV signatures,block arbitrary outbound connections
+	for devs=awareness of problems, build quality assurance into software dev
+
+
+
+
+
+
+
+
+

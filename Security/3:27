@@ -1,0 +1,72 @@
+3/27 
+Security Lecture
+
+Off-by-one Vulnerabilities: miscalculating the condition to end a loop
+	in char* username, if username is > length 32, the next char will be written into null in buffer
+Off-by-one Null Termination: some string functions are designed to ALWAYS place NULL terminator at end of string, this can cause issues
+
+access local variable by set constant to ebp
+if we want to access buffer 1,2,3 everything will be constant offset to base pointer
+if base stack pointer changes, local variable and address to local var changes
+
+(gdb) break *foo+54
+string concatenator always appends NULL terminator (00) after the string
+
+*all local variables can be changed
+Saved EBP will now be pointed to, and it will point to somewhere lower than the caller's OG frame
+Plant new return address! You can inject your malicious here
+
+Integer Overflows: due to wraparound
+unsigned ints can be wrapped around if the value is larger than what an int is (65535)
+signed ints when reaching max neg value (-32767..something) will go to the postive value + 1 (32768)
+
+Signedness Bugs
+
+buffer length is full and n in strncat turns out to be -1
+since strncat takes unsigned ints, n ends up being a huge number due to wraparound 
+buffer overflow
+
+Issues with Strcpy()
+
+make sure sizeof(target) != source
+strncpy(name, hname, sizeof(name))
+	if hname != NULL
+		strncpy(..., ..., sizeof name - strlen(name) -1) //make sure sizeof(hname) > name
+	}
+}
+
+Format String Vulnerabilties
+
+you can print strings from the stack that have important data by using a python script
+write whatever you want to the mem addresses
+
+Attacks on FORMAT STRING VULNs
+
+	segmentation overflow, denial of service attack -> printf(%s%s%s%s%s)
+	...
+	write some value to the mem address
+	...
+	printf(%d %d %d) -> display whats in mem location
+	(100% new things!) -> print 3, 1,2,3
+
+Book: exploiting software Hackers Handbook
+	chapter 7 on buffer overflow
+
+MT GOING OVER_______
+
+login lockout doesn't prevent password hashing because lockout is online and getting password hashes can be accessed ....?
+
+iterations make it slower for hacker, dont make pw safer
+Cross Site request forgery for TicketMeister.com
+	because the server just has ticket number and you can readily get the server
+	to change tickets for you
+	get user to click on a link to make attack possible
+	to prevent, come up with cross site request forgery token, session ID wouldnt really help
+
+SQL questions, can approach prevent? when it replaces? blacklisting does not help so no, replacing '' with "" does not help
+	you can use stack query to bypass
+if you want to inject something w select but try to take out select by replacing it, it can still be injected because you can put seselectlect
+or capitalizations
+
+**FIND PAPERS ON USER DATA**
+

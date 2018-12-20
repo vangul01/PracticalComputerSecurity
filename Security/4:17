@@ -1,0 +1,56 @@
+4/17
+Security Lecture
+
+ethical and legal issues not included on exam
+
+Virus vs other malware
+	click on it, it is a SELF-REPLICATING piece of code that attaches itself to other programs
+	you can get a virus just by visiting a website, may automatically download something! :O
+
+Anti-Virus/Anti-Malware works by...	
+	blacklisting approach: search for matching malicious patterns in file aka a virus signature
+	whitelist approach (like apple does w downloading stuff) HOWEVER a malware can copy a compromised certificate and pretend to be a trusted source for download
+	
+	anti-virus software -> negatives?
+		government backdoor
+		false sense of security
+		it can be given elevated privilege, if its exploited, the malware gets cascaded privilege
+
+Worms! Don't need a host or human interaction, replicates across the network
+Why use worms?
+	They're fast! You don't have to wait for human interaction and can go across the network by itself
+	it can do denial of service ie: Sammys Myspace worm
+	increase damage
+	harder to trace back to source location as well
+Elements of a Worm:
+1. gain access to target system- exploit a vulnerability of the target system
+2. propogating- transfer worm to the target system
+3. Look for new victims! Neighboring hosts
+	search etc/hosts to find other hosts, target email addresses sent out from servers, random IPs, network neighborhoods
+4. Scan for same vulnerabilities in neighbors
+	if same vulnerabilties, exploit it and spread
+5. execute the payload
+	consume bandwidth, denial of service, create backdoor, etc..other stuff
+
+Basic Goal: spread to as many people as possible and then execute payload
+
+Morris Worm: used weak passwords to get access to other computers
+
+Backdoor = allows attacker to gain access to program where they can manipulate the program/take control of it
+	backdoor runs with user permission
+	needs to be executed with root privilege 
+
+Netcat: can be used as a backdoor program
+	Listen mode and client mode
+	client mode(attacker) initiates incoming connection with listen mode(victim) but if theres a firewall, its blocked
+		BUT if you have victim initiating outgoing connection with client, it would be ok
+
+Checksum for when you download site
+download program, hash it and make sure it matches the checksum
+once you download program, just check to make sure its not a trojan horse
+
+virustotal.com, you have lots of engines to check a particular file, you can use a URL too!
+
+
+
+

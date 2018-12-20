@@ -1,0 +1,92 @@
+2/20
+Lecture 5 - Security
+
+2
+Security usually seen as more of an add on, without having system built based on it
+3
+1st stage of software life cycle: what needs to be done with that system?
+ie system NYU Classes needs to be able to accept homework, make assignment, discussion forums, grader/professor grade submission, notifications, single sign on
+4
+requirements are written out as functional and nonfunctional
+you can also capture requirements with a Use-Case model (ie UML Diagram) its a user scenario
+8
+Data Flow Diagram (DFD)
+Data flow between different entities
+Yellow box is like an actor
+processes, data stores and external entities to help know what goes on in your system
+You cant have a data flow between external entities because there should be a process in between, nor between 2 data stores, also require a process in between
+seeing in terms of data flow between processes
+9
+ER diagram, relational database
+help you analyze your system
+10,13
+Class diagram
+11
+Interaction/collaboration diagram
+16
+Security activities can exist throughout whole software cycle
+17
+Vulnerability is something we can control
+Introduce security control that will help us reduce the risk
+How do you evaluate your impact/determine value of assets? You need to know how much that info costs
+18
+Risks = value of assets, likelihood of threats, likelihood of vulnerabilities
+19,20
+Cost of server, loss of productivity, loss of data stored in server, harm to business will all help evaluate impact of consequences, value of asset. Its so much more than just price tag
+How much will somebody gain from this? Price others are willing to pay for this asset
+21
+Numeric value to risk(quant risk analysis) or levels like low/med/high, criticality levels(qual risk analysis)
+22
+SLE formula
+SLE = 10,000(asset value) * .25(exposure factor)
+ARO = 0, never gonna happen
+ARO = 1, once per year
+ARO = .1, one in 10 years
+30
+Most threats occur across boundaries
+you need to identify trust boundaries in your system
+31
+DFD example
+trust boundaries in red dashed line
+33
+One way you can model your system
+Make sure to ask yourself what can go wrong!
+34
+Thinking like an adversary is unstructured, not systematic
+"Think like an attacker" is a trap, its not possible unless you are an attacker
+36
+More structured ways to come up with threats
+Identify your assets, then identify the threats on those assets
+44
+STRIDE
+focused on model itself, not assets or attacker
+work on model of the software
+from here, try to identify threats
+These are all the opposite of what you want to protect
+45
+Tampering w web browser: request forgery, 
+Spoof w web browser: pretending to be someone else by stealing others login credentials, session hijacking, installing javascript to access sensitive session info with cokkies
+Go through software model and do STRIDE on each aspect of the model to catch threats
+Doesnt matter what the category of the threat is, as long as the prompts help you identify the threats**
+46
+Repudiation, if you send a message, you cant deny having sent it
+Information disclosure: if a process leaks out a friends grade to you, thats a confidentiality issue
+Denial of Service: if you cant access your submission at the end of the due date
+escalation of priviledge: you can try to gain access to a process that you dont have authorization to
+DataStore/I: leak info
+50
+characterize system, what can go wrong, address threats
+51
+adding security controls after you make your system isn't as effective as considering them throughout software development
+
+What to know: Based on a DD diagram, can I identify STRIDE per element??
+Given a system, i should be able to identify/characterize DFD and STRIDE per part of DFD
+**XIN paper will help with this
+
+ALSO, card game on security...adams made i think
+**EoP card game**
+
+dont cause Denial of Service attack to host
+Use web proxy tool to identify vulnerabilities, HTTP proxy tool
+
+
